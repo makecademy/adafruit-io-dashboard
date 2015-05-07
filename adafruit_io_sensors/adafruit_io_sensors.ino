@@ -105,7 +105,7 @@ void setup(void)
 void loop(void) {
   
   // Reconnect if we lost connection to AIO
-  if(! client.connected()) {
+  if(! mqttclient.connected()) {
     Serial.print(F("AIO connection dropped. Attempting reconnect"));
     mqtt_connect();
   }
