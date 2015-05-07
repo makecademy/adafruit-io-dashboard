@@ -96,9 +96,19 @@ void setup(void)
   while (!displayConnectionDetails()) {
     delay(1000);
   }
+  
+  // Connect to AIO
+  mqtt_connect();
+  
 }
 
 void loop(void) {
+  
+  // Reconnect if we lost connection to AIO
+  if(! client.connected()) {
+    Serial.print(F("AIO connection dropped. Attempting reconnect"));
+    mqtt_connect();
+  }
   
   // Measure ambient light
   float light_level_reading = analogRead(LIGHT_SENSOR_PIN);
@@ -193,4 +203,20 @@ bool displayConnectionDetails(void)
     Serial.println();
     return true;
   }
+}
+
+void mqtt_connect() {
+
+  char client_name[30];
+
+  // generate new client name
+  sprintf(client_name, "adafruit-cc3000-%ul", micros());
+
+  // attempt connection
+  if (mqttclient.connect(client_name, AIO_KEY, NULL)) {
+    Serial.println(F("Connected to AIO"));
+  } else {
+    Serial.println(F("AIO connect failed"));
+  }
+
 }
