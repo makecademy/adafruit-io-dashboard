@@ -1,2 +1,2 @@
 # adafruit-io-dashboard
-IoT dashboard project using Adafruit.io
+IoT dashboard project using Adafruit IO
