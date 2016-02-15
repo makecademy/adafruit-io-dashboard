@@ -35,16 +35,16 @@ Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ
 #define HUMIDITY_PUBLISH_PATH "api/feeds/humidity/data/send.json"
 #define LIGHT_PUBLISH_PATH "api/feeds/light/data/send.json"
 
-// CC3000 client & MQTT client instances
-Adafruit_CC3000_Client client = Adafruit_CC3000_Client();
-PubSubClient mqttclient("io.adafruit.com", 1883, callback, client);
-
 // Callback
 void callback (char* topic, byte* payload, unsigned int length) {
   Serial.println(topic);
   Serial.write(payload, length);
   Serial.println("");
 }
+
+// CC3000 client & MQTT client instances
+Adafruit_CC3000_Client client = Adafruit_CC3000_Client();
+PubSubClient mqttclient("io.adafruit.com", 1883, callback, client);
 
 void setup(void)
 {
